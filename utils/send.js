@@ -9,7 +9,7 @@ function send(msg) {
       "content": msg
     }
   }
-  http.post('https://oapi.dingtalk.com/robot/send?access_token=0fc8bb8bc38613ea9e711eb7bfd0c3822f879f9cea18ebfcf16b66fc0af156aa',
+  http.post('https://oapi.dingtalk.com/robot/send?access_token=更换地址',
     JSON.stringify(data), {
     headers: {
       'Content-Type': 'application/json',
