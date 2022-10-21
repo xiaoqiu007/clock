@@ -5,14 +5,15 @@ const account = require('./user/account')
 const send = require('./utils/send')
 const time = require('./utils/time')
 
+// 获取账户列表
 account.forEach(a => {
   var user = a.split(",")
   clock(user[0], user[1])
 })
 
 
-// 账户登录
 function clock(user, pass) {
+  // 账户登录
   authLogin(user, pass).then(res => {
     if (res.code == 0) {
       send(res.msg)
@@ -25,17 +26,10 @@ function clock(user, pass) {
         } else {
           const data = res.msg
           console.log(time.getDateTime() ,'获取到 ' + data.stuName + ' 个人健康打卡信息')
-
-          return
-
+          // return
           // 进行健康打卡
           healthClock.post(data, token).then(res => {
             send(data.stuName + ', ' + res.msg.data)
-            // if (res.msg.data == '打卡成功') {
-            //   send(data.stuName + ',' + res.msg)
-            // } else {
-            //   send(data.stuName + ',' + res.msg)
-            // }
           })
         }
       })

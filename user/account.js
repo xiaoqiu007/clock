@@ -1,5 +1,5 @@
 
 module.exports = [
-  '2022b31046,Zjweu072658'
+  '账号,密码'
 ]
 

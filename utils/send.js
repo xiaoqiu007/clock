@@ -1,5 +1,4 @@
 const http = require('../libs/http')
-const querystring = require('querystring');
 
 module.exports = send
 
