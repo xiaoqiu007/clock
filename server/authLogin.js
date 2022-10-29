@@ -33,7 +33,7 @@ async function authLogin(username, password) {
     'execution': execution,
     '_eventId': _eventId,
     'rmShown': rmShown
-  };
+  }
 
   // 进行登录操作
   const loginPage = await http.post(url, querystring.stringify(postData), {
@@ -43,6 +43,7 @@ async function authLogin(username, password) {
       'Cookie': cookie,
     },
   });
+
   let url1, cookie1;
   try {
     url1 = loginPage.headers.location
@@ -54,15 +55,18 @@ async function authLogin(username, password) {
     }
   }
 
-
+  console.log(url1)
+  console.log(cookie1)
   // 根据 location 进行 302 跳转 (获取 Token 信息)
   const ticket = await http.get(url1, {
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)',
       'Cookie': cookie1,
+      'rejectUnauthorized':'false'
     }
   })
+  console.log(ticket.headers.location)
   let token = ''
   try {
     token = ticket.headers.location.replace('https://skl.zjweu.edu.cn/#/login?token=', '')

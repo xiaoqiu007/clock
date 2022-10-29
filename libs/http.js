@@ -5,11 +5,13 @@ module.exports = {
     get: (targetUrl, options = {}) => request(targetUrl, {
         ...options,
         method: 'GET',
+        rejectUnauthorized: false
     }),
     post: (targetUrl, data, options = {}) => request(targetUrl, {
         ...options,
         method: 'POST',
         data,
+        rejectUnauthorized: false
     }),
 };
 
@@ -23,27 +25,12 @@ function request(targetUrl, options = {}) {
             res.on('data', chunk => rawData += chunk);
             res.on('error', error => reject(error));
             res.on('end', () => {
-                // if (options.followLocation && res.statusCode === 302) {
-                if (false) {
-                    console.log(res.headers)
-                    const cookie = (res.headers['set-cookie'] || []).slice(2,3).join('; ').replace('; domain=.zjweu.edu.cn; path=/', '')
-                    request(res.headers.location, {
-                        method: 'GET',
-                        headers: {
-                            'Cookie': cookie
-                        },
-                    }).then(
-                        res => resolve(res),
-                        err => reject(err),
-                    );
-                } else {
-                    // console.log('res >>> ', res);
-                    resolve({
-                        statusCode: res.statusCode,
-                        data: rawData,
-                        headers: res.headers,
-                    });
-                }
+              // console.log('res >>> ', res);
+              resolve({
+                  statusCode: res.statusCode,
+                  data: rawData,
+                  headers: res.headers,
+              });
             });
         }).on('error', error => reject(error))
             .end(options.data || '');
